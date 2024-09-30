@@ -9,7 +9,7 @@ which eases the memory power in the case of permanent
 deletion and creation of objects.
 
 ## Examples
-```
+``` rust
 use vector_growing::*;
 
 let mut vg = VecGrow::new();
@@ -28,7 +28,7 @@ vg.push(1);
 assert_eq!(vg[0], Some(1));
 ```
 Initializing VecGrow using a macro:
-```
+``` rust
 use vector_growing::*;
 
 let vg_empty: VecGrow<u8> = vec_grow![];

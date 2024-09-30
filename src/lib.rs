@@ -12,44 +12,43 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-
 use std::ops::{Index, IndexMut};
 mod iter;
 use iter::*;
 
-/// It is similar to a regular `Vec`, with one exception - 
-/// the size is not reduced. `VecGrow` can constantly grow, 
-/// but not decrease, and when objects are deleted, 
-/// their place remains for the new object as a free index, 
-/// which eases the memory power in the case of permanent 
+/// It is similar to a regular `Vec`, with one exception -
+/// the size is not reduced. `VecGrow` can constantly grow,
+/// but not decrease, and when objects are deleted,
+/// their place remains for the new object as a free index,
+/// which eases the memory power in the case of permanent
 /// deletion and creation of objects.
 /// # Examples
-/// ```
+/// ``` rust
 /// use vector_growing::*;
-/// 
+///
 /// let mut vg = VecGrow::new();
 /// vg.push(1);
 /// vg.push(2);
-/// 
+///
 /// assert_eq!(vg[0], Some(1));
 /// assert_eq!(vg[1], Some(2));
-/// 
+///
 /// vg.remove(0);
-/// 
+///
 /// assert_eq!(vg[0], None);
-/// 
+///
 /// vg.push(1);
-/// 
+///
 /// assert_eq!(vg[0], Some(1));
 /// ```
 /// Initializing VecGrow using a macro:
-/// ```
+/// ``` rust
 /// use vector_growing::*;
-/// 
+///
 /// let vg_empty: VecGrow<u8> = vec_grow![];
 /// let vg_num = vec_grow![1, 2, 3];
 /// let vg_zero = vec_grow![0; 100];
-/// 
+///
 /// assert!(vg_empty.is_empty());
 /// assert_eq!(vg_num[1], Some(2));
 /// assert_eq!(vg_zero[99], Some(0));
@@ -62,9 +61,9 @@ pub struct VecGrow<T> {
 
 impl<T> VecGrow<T> {
     /// Create of `VecGrow`
-    /// 
+    ///
     /// # Examples
-    /// ```
+    /// ``` rust
     /// use vector_growing::*;
     /// let _vg: VecGrow<u8> = VecGrow::new();
     /// // or
@@ -80,7 +79,7 @@ impl<T> VecGrow<T> {
         }
     }
 
-    /// Adding a new element to the place of the old one, 
+    /// Adding a new element to the place of the old one,
     /// if there is no free space, selected a new place and add the element.
     pub fn push(&mut self, value: T) {
         if let Some(last_index) = self.free_idxs.last() {
@@ -115,11 +114,9 @@ impl<T> VecGrow<T> {
         self.objects.len()
     }
 
-    
-
     /// Creating an immutable iterator.
     /// # Examples
-    /// ```
+    /// ``` rust
     /// use vector_growing::*;
     /// let vg = vec_grow!(1, 2, 3);
     /// let mut vg_iter = vg.iter();
@@ -134,15 +131,15 @@ impl<T> VecGrow<T> {
 
     /// Creating an mutable iterator.
     /// # Examples
-    /// ```
+    /// ``` rust
     /// use vector_growing::*;
-    /// 
+    ///
     /// let mut vg = vec_grow!(1, 2, 3);
-    /// 
+    ///
     /// for num in vg.iter_mut() {
     ///     *num += 1;
     /// }
-    /// 
+    ///
     /// let mut vg_iter = vg.iter();
     /// assert_eq!(vg_iter.next(), Some(&2));
     /// assert_eq!(vg_iter.next(), Some(&3));
