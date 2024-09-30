@@ -1,0 +1,13 @@
+[package]
+name = "vector-growing"
+description = "The growing vector with free indexes."
+authors = ["Dmitriy Mayorov<MayorDi@yandex.ru>"]
+rust-version = "1.68.0"
+license = "Apache-2.0"
+version = "0.1.0"
+edition = "2021"
+readme = "README.md"
+homepage = "https://github.com/MayorDi/vector-growing"
+repository = "https://github.com/MayorDi/vector-growing"
+
+[dependencies]
